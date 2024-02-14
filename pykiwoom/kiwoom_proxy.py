@@ -49,7 +49,7 @@ class KiwoomProxy:
         )
 
         # kiwoom login
-        self.kiwoom.CommConnect()
+        # self.kiwoom.CommConnect()
 
         # condition load
         self.kiwoom.GetConditionLoad()
@@ -117,17 +117,17 @@ class KiwoomProxy:
                 if func_name == "SetRealReg":
                     code_list = real_cmd['code_list']   # ["005930", "000660"]
                     fid_list  = real_cmd['fid_list']    # ["215", "20", "214"]
-                    opt_type  = real_cmd['opt_type']
+                    opt_type  = real_cmd['opt_type'] # 0 => 신규 등록일 경우 의미하는 것 같음
 
                     # register fid
                     for ticker in code_list:
-                        if len(self.kiwoom.real_fid) == 0 or opt_type == 0:
-                            self.kiwoom.real_fid[ticker] = fid_list
-                        else:
-                            prev_ticker = list(self.kiwoom.real_fid.keys())[0]
-                            prev_fid_list = self.kiwoom.real_fid[prev_ticker]
+                        if len(self.kiwoom.real_fid) == 0 or opt_type == 0: # 실제로 수신 받고 있는 fid가 없거나 opt_type이 신규라면
+                            self.kiwoom.real_fid[ticker] = fid_list # 해당 티커의 fid_list를 할당
+                        else: # 만약 수신 받고 있는 티커가 있거나 opt_type이 신규가 아니면
+                            prev_ticker = list(self.kiwoom.real_fid.keys())[0] # 기존에 받고 있던 티커 리스트 중 맨 처음 받고
+                            prev_fid_list = self.kiwoom.real_fid[prev_ticker] # 이전 리스트 가져오고
                             self.kiwoom.real_fid[ticker] = \
-                                list(set(prev_fid_list + fid_list))
+                                list(set(prev_fid_list + fid_list)) #
 
                     self.kiwoom.SetRealReg(screen, ";".join(code_list),
                         ";".join(fid_list), str(opt_type))
