@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>로그인</string>
+     <string>내 계좌 불러오기</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="match_table">
@@ -83,8 +83,8 @@
    <widget class="QPushButton" name="mystock_btn">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>0</y>
+      <x>0</x>
+      <y>31</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -386,6 +386,19 @@
       <string/>
      </property>
     </column>
+   </widget>
+   <widget class="QLineEdit" name="myacc_edt">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>125</x>
+      <y>5</y>
+      <width>170</width>
+      <height>20</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
