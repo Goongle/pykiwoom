@@ -127,7 +127,7 @@ class KiwoomProxy:
                             prev_ticker = list(self.kiwoom.real_fid.keys())[0] # 기존에 받고 있던 티커 리스트 중 맨 처음 받고
                             prev_fid_list = self.kiwoom.real_fid[prev_ticker] # 이전 리스트 가져오고
                             self.kiwoom.real_fid[ticker] = \
-                                list(set(prev_fid_list + fid_list)) #
+                                list(set(prev_fid_list + fid_list)) # 신규로 추가될 티커에 fid_list 추가
 
                     self.kiwoom.SetRealReg(screen, ";".join(code_list),
                         ";".join(fid_list), str(opt_type))

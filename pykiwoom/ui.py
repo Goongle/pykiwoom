@@ -22,6 +22,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         
         # 여기에 추가적인 UI 설정이나 이벤트 연결을 할 수 있습니다.
     def on_login_button_click(self):
+        self.km.put_method(("GetLoginInfo", "ACCNO"))
+        data = self.km.get_method()
+        print(data)
+    def on_mystock_button_click(self):
+        self.km.put_method(("GetCodeListByMarket", "0"))
         tr_cmd = {
             'rqname': "opt10081",
             'trcode': 'opt10081',
@@ -44,21 +49,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 tr_cmd['next'] = '2'
             else:
                 break
-
-    def on_mystock_button_click(self):
-        tr_cmd = {
-            'rqname': "opt10081",
-            'trcode': 'opt10081',
-            'next': '0',
-            'screen': '1000',
-            'input': {
-                "종목코드": "005930",
-                "기준일자": "20220612",
-                "수정주가구분": "",
-            },
-            'output': ["일자", "시가", "고가", "저가", "현재가"]
-        }
-        self.km.put_method(("GetCodeListByMarket", "0"))
         # km.put_method(("GetMasterCodeName", "005930"))
         data = self.km.get_method()
         print(data)

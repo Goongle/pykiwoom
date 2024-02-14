@@ -34,13 +34,11 @@ class Kiwoom:
         self.condition_loaded   = False
 
         self._set_signals_slots()
-
         self.tr_output = {}
         self.real_fid = {}
 
         if login:
             self.CommConnect()
-
     #-------------------------------------------------------------------------------------------------------------------
     # callback functions
     #-------------------------------------------------------------------------------------------------------------------
@@ -100,7 +98,7 @@ class Kiwoom:
             }
             self.tr_cond_dqueue.put(output)
 
-    def get_data(self, trcode, rqname, items):
+    def get_data(self, trcode, rqname, items): # trcode에서
         rows = self.GetRepeatCnt(trcode, rqname)
         if rows == 0:
             rows = 1
@@ -137,11 +135,11 @@ class Kiwoom:
                 'KOA_NORMAL_BUY_KQ_ORD', 'KOA_NORMAL_SELL_KQ_ORD',
                 'KOA_NORMAL_KQ_CANCEL', 'KOA_NORMAL_KQ_MODIFY'):
                 return None
-            items = self.tr_output[trcode]
-            data = self.get_data(trcode, rqname, items)
+            items = self.tr_output[trcode] # output은 trcode에 요청 했을 때 어떤 항목들을 요청할 것인지 ex) 예수금 등
+            data = self.get_data(trcode, rqname, items) # item에 위에서 넣은 trcode 내 필요한 항목이 있고 get_Data 함수를 통해 받은 TR에서 해당 항목들을 가지고 data 라는 변수에 할당
 
             remain = 1 if next == '2' else 0
-            self.tr_dqueue.put((data, remain))
+            self.tr_dqueue.put((data, remain)) # 더 데이터가 남으면 한번 더
         else:
             print(self.tr_items)
             try:
@@ -226,7 +224,6 @@ class Kiwoom:
         self.ocx.OnReceiveRealCondition.connect(self.OnReceiveRealCondition)
         self.ocx.OnReceiveTrCondition.connect(self.OnReceiveTrCondition)
         self.ocx.OnReceiveConditionVer.connect(self.OnReceiveConditionVer)
-
     #-------------------------------------------------------------------------------------------------------------------
     # OpenAPI+ 메서드
     #-------------------------------------------------------------------------------------------------------------------
@@ -240,6 +237,7 @@ class Kiwoom:
         if block:
             while not self.connected:
                 pythoncom.PumpWaitingMessages()
+        print("로그인 완료! ")
 
     def CommRqData(self, rqname, trcode, next, screen):
         """
