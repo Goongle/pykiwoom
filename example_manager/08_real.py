@@ -5,17 +5,14 @@ if __name__ == "__main__":
     km = pykiwoom.KiwoomManager()
 
     real_cmd = {
-        'func_name': "SetRealReg",
-        'real_type': '장시작시간',
-        'screen': '2000',
-        'code_list': "", 
-        'fid_list': "215;20;214",
-        "opt_type": 0
-    }
-
+    'func_name': "SetRealReg",
+    'real_type': '주식체결',
+    'screen': '1001',
+    'code_list': "028670", 
+    'fid_list': "10;17",
+    "opt_type": 0
+}
     km.put_real(real_cmd)
     while True:
-        data = km.get_real('장시작시간')
+        data = km.get_real()
         print(data)
-
-

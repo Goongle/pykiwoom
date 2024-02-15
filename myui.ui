@@ -127,22 +127,22 @@
     </column>
     <column>
      <property name="text">
-      <string>현재가</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
       <string>수익률(%)</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>체결시간</string>
+      <string>매매가능수량</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>매도가</string>
+      <string>현재가</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>매도예정가</string>
      </property>
     </column>
    </widget>

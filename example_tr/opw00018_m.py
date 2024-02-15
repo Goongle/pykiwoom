@@ -20,4 +20,3 @@ df = kiwoom.block_request("opw00018",
                           next=0)
 
 print(df)
-df.to_excel("opw00018.xlsx")

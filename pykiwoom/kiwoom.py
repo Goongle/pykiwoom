@@ -182,6 +182,7 @@ class Kiwoom:
         pass
 
     def OnReceiveChejanData(self, gubun, item_cnt, fid_list):
+        print("접수 등 발생")
         """주문접수, 체결, 잔고 변경시 이벤트가 발생
 
         Args:
@@ -196,6 +197,7 @@ class Kiwoom:
                 output[fid]=data
 
             self.chejan_dqueue.put(output)
+            print(output)
 
     def OnReceiveRealData(self, code, rtype, data):
         """실시간 데이터를 받는 시점에 콜백되는 메소드입니다.

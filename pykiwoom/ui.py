@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QWidget
 import pykiwoom
+import time
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -23,36 +24,37 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # 여기에 추가적인 UI 설정이나 이벤트 연결을 할 수 있습니다.
     def on_login_button_click(self):
         self.km.put_method(("GetLoginInfo", "ACCNO"))
-        data = self.km.get_method()
-        print(data)
+        data = str(self.km.get_method()[0])
+        self.myacc_edt.setText(data)
+
     def on_mystock_button_click(self):
-        self.km.put_method(("GetCodeListByMarket", "0"))
         tr_cmd = {
-            'rqname': "opt10081",
-            'trcode': 'opt10081',
+            'rqname': "opw00018",
+            'trcode': 'opw00018',
             'next': '0',
             'screen': '1000',
             'input': {
-                "종목코드": "005930",
-                "기준일자": "20220612",
-                "수정주가구분": "",
+                "계좌번호": self.myacc_edt.text(),
+                "비밀번호": "",
+                "비밀번호입력매체구분": "00",
+                "조회구분": "1"
             },
-            'output': ["일자", "시가", "고가", "저가", "현재가"]
+            'output': ["종목번호", "종목명","매입금액","보유수량","수익률(%)","매매가능수량", "현재가"]
         }
-
         while True:
             self.km.put_tr(tr_cmd)
             data, remain = self.km.get_tr()
+            data["매도예정가"] = 0
             print(data)
-
-            if remain:
+            for i in range(data.shape[0]):
+                for j in range(data.shape[1]):
+                    item = QtWidgets.QTableWidgetItem(str(data.iloc[i, j]))
+                    print(item)
+                    self.mystock_table.setItem(i, j, item)
+            if remain:  
                 tr_cmd['next'] = '2'
             else:
                 break
-        # km.put_method(("GetMasterCodeName", "005930"))
-        data = self.km.get_method()
-        print(data)
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     main_window = Ui_MainWindow()
@@ -61,3 +63,23 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+'''
+주문 cmd 예시
+        order_cmd = {
+            'rqname': "시장가주문",
+            'screen': '1000',
+            'acc_no' : data,
+            'order_type' : "1",
+            'code' : '005930',
+            'quantity' : '10',
+            'price' : "72000",
+            'hoga_gb' : "03",
+            'order_no' : ""
+        }
+        self.km.put_order(order_cmd)
+        print("매수 완료")
+
+'''
